@@ -1,82 +1,23 @@
-let CHOICES = ["rock", "paper", "scissor"];
+let choices = ["rock", "paper", "scissors"];
 
-function getRandomInt(max) {
-  return Math.floor(Math.random() * max);
-}
-
-function getComputerChoice() {
-  return CHOICES[getRandomInt(3)];
-}
-
-function getHumanChoice() {
-  return prompt("Enter your choice (Rock, Paper, Scissor)");
-}
-
-function getWinner(humanChoice, computerChoice) {
-  // Returns 0 if draw, 1 if human wins, -1 if computer wins
-  switch (humanChoice) {
-    case "rock":
-      switch (computerChoice) {
-        case "rock":
-          return 0;
-        case "paper":
-          return -1;
-        case "scissor":
-          return 1;
-      }
-    case "paper":
-      switch (computerChoice) {
-        case "rock":
-          return 1;
-        case "paper":
-          return 0;
-        case "scissor":
-          return -1;
-      }
-    case "scissor":
-      switch (computerChoice) {
-        case "rock":
-          return -1;
-        case "paper":
-          return 1;
-        case "scissor":
-          return 0;
-      }
-  }
-}
+let wins_against = {
+  rock: "scissors",
+  paper: "rock",
+  scissors: "paper",
+};
 
 function playRound() {
-  let humanChoice = getHumanChoice().toLowerCase();
-  console.log(`You chose '${humanChoice}'`);
+  let playerChoice = prompt("Choose rock, paper or scissors").toLowerCase();
+  let computerChoice = choices[Math.floor(Math.random() * 3)];
 
-  let computerChoice = getComputerChoice();
-  console.log(`The computer chose '${computerChoice}'`);
+  console.log(`Your choice: ${playerChoice}`);
+  console.log(`Computer's choice: ${computerChoice}`);
 
-  return getWinner(humanChoice, computerChoice);
-}
-
-function playGame() {
-  let humanScore = 0;
-  let computerScore = 0;
-
-  for (let i = 0; i < 5; i++) {
-    console.log(`Playing round ${i + 1}...`);
-
-    let result = playRound();
-
-    if (result == 1) {
-      console.log("You Win!");
-      humanScore += 1;
-    } else if (result == -1) {
-      console.log("You Lose!");
-      computerScore += 1;
-    } else {
-      console.log("It was a draw!");
-    }
-
-    // Print a blank line
-    console.log("\n");
+  if (playerChoice == computerChoice) {
+    console.log("It's a tie");
+  } else if (wins_against[playerChoice] === computerChoice) {
+    console.log("You win");
+  } else {
+    console.log("Computer wins");
   }
 }
-
-playGame();
